@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model adocoes {
+  adocoes_id  String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_pet      String?    @db.Uuid
+  id_adotante String?    @db.Uuid
+  adotantes   adotantes? @relation(fields: [id_adotante], references: [adotante_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_adotante")
+  pet         pet?       @relation(fields: [id_pet], references: [pet_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_pet")
+}
+
+model adotantes {
+  adotante_id   String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nome          String       @db.VarChar(100)
+  email         String       @unique @db.VarChar(100)
+  telefone      String       @db.VarChar(11)
+  cep           String       @db.VarChar(8)
+  endereco      String       @db.VarChar(100)
+  user_adotante user_sistema @default(usuario)
+  adocoes       adocoes[]
+}
+
+model pet {
+  pet_id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nome        String    @db.VarChar(100)
+  especie_pet especie
+  data_nasc   DateTime  @db.Date
+  descricao   String?   @db.VarChar(280)
+  status_pet  status    @default(disponivel)
+  tamanho_pet tamanho
+  sexo_pet    sexo
+  image_pet   String?   @db.VarChar(300)
+  adocoes     adocoes[]
+}
+
+enum especie {
+  cachorro
+  gato
+  aves
+  roedores
+  peixes
+  outros
+}
+
+enum personalidade {
+  amigo
+  guardiao     
+  alegre
+  quieto
+  agitado
+  sociavel     
+  agressivo
+  calmo
+  extrovertido
+  introvertido
+  inteligente
+  obediente
+  desobediente
+}
+
+enum sexo {
+  macho
+  femea 
+}
+
+enum status {
+  disponivel 
+  adotado
+}
+
+enum tamanho {
+  pequeno
+  medio   
+  grande
+}
+
+enum user_sistema {
+  administrador
+  usuario       
+}
+
+
+//postgresql://petsys_user:X6iRxsrNUg1HKQ1Vlm7ggQtVDny9ZyGL@dpg-csmml4aj1k6c73dl4v30-a.oregon-postgres.render.com/petsys
