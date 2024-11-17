@@ -25,12 +25,36 @@ export class PetController {
         }
     }
 
+    async findPetsBySize(request, response) {
+        const { tamanho_pet } = request.params;
+        try {
+            const pets = await prismaClient.pet.findMany({
+                where: { tamanho_pet }
+            });
+            return response.status(200).json(pets);
+        } catch (error) {
+            return response.status(500).json({ error: error.message });
+        }
+    }
+
+    async findPetsByPersonality(request, response) {
+        const { personalidade_pet } = request.params;
+        try {
+            const pets = await prismaClient.pet.findMany({
+                where: { personalidade_pet }
+            });
+            return response.status(200).json(pets);
+        } catch (error) {
+            return response.status(500).json({ error: error.message });
+        }
+    }
+
     async addPet(request, response) {
-        const { nome, especie_pet, data_nasc, descricao, status_pet, tamanho_pet, sexo_pet } = request.body;
+        const { nome, especie_pet, data_nasc, descricao, status_pet, tamanho_pet, sexo_pet, personalidade_pet, image_pet } = request.body;
         try {
             const pet = await prismaClient.pet.create({
                 data: {
-                    nome, especie_pet, data_nasc, descricao, status_pet, tamanho_pet, sexo_pet
+                    nome, especie_pet, data_nasc, descricao, status_pet, tamanho_pet, sexo_pet, personalidade_pet, image_pet
                 }
             });
             return response.status(201).json(pet);
@@ -41,12 +65,12 @@ export class PetController {
 
     async updatePet(request, response) {
         const { id } = request.params;
-        const { nome, especie_pet, data_nasc, descricao, status_pet, tamanho_pet, sexo_pet } = request.body;
+        const { nome, especie_pet, data_nasc, descricao, status_pet, tamanho_pet, sexo_pet, personalidade_pet, image_pet } = request.body;
     
         try {
             const pet = await prismaClient.pet.update({
                 data: {
-                    nome, especie_pet, data_nasc, descricao, status_pet, tamanho_pet, sexo_pet
+                    nome, especie_pet, data_nasc, descricao, status_pet, tamanho_pet, sexo_pet, personalidade_pet, image_pet
                 }, 
                 where: { pet_id: id }
             });

@@ -27,16 +27,17 @@ model adotantes {
 }
 
 model pet {
-  pet_id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nome        String    @db.VarChar(100)
-  especie_pet especie
-  data_nasc   DateTime  @db.Date
-  descricao   String?   @db.VarChar(280)
-  status_pet  status    @default(disponivel)
-  tamanho_pet tamanho
-  sexo_pet    sexo
-  image_pet   String?   @db.VarChar(300)
-  adocoes     adocoes[]
+  pet_id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nome                  String    @db.VarChar(100)
+  especie_pet           especie
+  data_nasc             DateTime  @db.Date
+  descricao             String?   @db.VarChar(280)
+  status_pet            status    @default(disponivel)
+  tamanho_pet           tamanho
+  sexo_pet              sexo
+  personalidade_pet     personalidade
+  image_pet             String?   @db.VarChar(300)
+  adocoes               adocoes[]
 }
 
 enum especie {
@@ -85,5 +86,3 @@ enum user_sistema {
   usuario       
 }
 
-
-//postgresql://petsys_user:X6iRxsrNUg1HKQ1Vlm7ggQtVDny9ZyGL@dpg-csmml4aj1k6c73dl4v30-a.oregon-postgres.render.com/petsys

@@ -12,6 +12,11 @@ routerPets.get('/pets', petController.findPets);
 //Rota para buscar um pet por ID
 routerPets.get('/pet/:id', petController.findPetById);
 
+//Rota para buscar um pet por ID
+routerPets.get('/pets/tamanho/:tamanho_pet', petController.findPetsBySize);
+
+//Rota para buscar um pet por ID
+routerPets.get('/pets/personalidade/:personalidade_pet', petController.findPetsByPersonality);
 
 // Rota para adicionar um novo pet
 routerPets.post('/pet', petController.addPet);
