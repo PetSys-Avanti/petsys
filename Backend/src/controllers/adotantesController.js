@@ -1,7 +1,9 @@
 import { PrismaClient } from '@prisma/client';
-import { bcrypt } from 'bcryptjs';
+import pkg from 'bcryptjs';
 
 const prismaClient = new PrismaClient();
+const { bcrypt } = pkg;
+
 
 export class AdotanteController {
     async findAdotantes (request, response) {

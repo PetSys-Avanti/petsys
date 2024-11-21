@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
+import pkg from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const prismaClient = new PrismaClient();
+const { bcrypt } = pkg;
 
 export class LoginController {
 
