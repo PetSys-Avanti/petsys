@@ -6,22 +6,22 @@ const routerAdocoes = Router();
 const adocaoController = new AdocaoController();
 
 // Rota para buscar todos as adoções
-routerAdocoes.get('/pets', adocaoController.findAdocoes);
+routerAdocoes.get('/', adocaoController.findAdocoes);
 
 
 //Rota para buscar uma adoção por ID
-routerAdocoes.get('/pet/:id', adocaoController.findAdocaoById);
+routerAdocoes.get('/:id', adocaoController.findAdocaoById);
 
 
 // Rota para adicionar uma nova adoção
-routerAdocoes.post('/pet', adocaoController.addAdocao);
+routerAdocoes.post('/', adocaoController.addAdocao);
 
 
 // Rota para atualizar uma adoção por ID
-routerAdocoes.put('/pet/:id', adocaoController.updateAdocao); 
+routerAdocoes.put('/:id', adocaoController.updateAdocao); 
 
 
 // Rota para deletar uma adoção por ID
-routerAdocoes.delete('/pet/:id', adocaoController.deleteAdocao);
+routerAdocoes.delete('/:id', adocaoController.deleteAdocao);
 
 export { routerAdocoes };

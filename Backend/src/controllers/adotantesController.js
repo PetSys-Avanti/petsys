@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { bcrypt } from 'bcryptjs';
 
 const prismaClient = new PrismaClient();
 
@@ -26,11 +27,21 @@ export class AdotanteController {
     }
 
     async addAdotante(request, response) {
-        const { nome, email, telefone, cep, endereco, user_adotante } = request.body;
+        const { nome, email, telefone, cep, endereco, senha, user_adotante } = request.body;
+
         try {
+            const senhaHash = bcrypt.hashSync(senha, 10);
             const adotante = await prismaClient.adotantes.create({
                 data: {
-                    nome, email, telefone, cep, endereco, user_adotante
+                    nome, email, telefone, cep, endereco, senha: senhaHash, user_adotante
+                },
+                select: {
+                    id: true,
+                    nome: true,
+                    telefone: true,
+                    cep: true,
+                    endereco: true,
+                    user_adotante: true
                 }
             });
             return response.status(201).json(adotante);
@@ -41,12 +52,12 @@ export class AdotanteController {
 
     async updateAdotante(request, response) {
         const { id } = request.params;
-        const { nome, email, telefone, cep, endereco, user_adotante } = request.body;
+        const { nome, email, telefone, cep, endereco, senha, user_adotante } = request.body;
     
         try {
             const adotante = await prismaClient.adotantes.update({
                 data: {
-                    nome, email, telefone, cep, endereco, user_adotante
+                    nome, email, telefone, cep, endereco, senha, user_adotante
                 }, 
                 where: { adotante_id: id }
             });
