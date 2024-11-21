@@ -22,7 +22,7 @@ model adotantes {
   telefone      String       @db.VarChar(11)
   cep           String       @db.VarChar(8)
   endereco      String       @db.VarChar(100)
-  senha         String
+  senha         String       @db.VarChar(20)
   user_adotante user_sistema @default(usuario)
   adocoes       adocoes[]
 }
