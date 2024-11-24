@@ -10,11 +10,11 @@ const adotanteController = new AdotanteController();
 const loginController = new LoginController();
 
 // Rota para buscar todos os adotantes
-routerAdotantes.get('/', checkAuthentication, adotanteController.findAdotantes);
+routerAdotantes.get('/', checkAuthentication, checkPermission(['administrador']), adotanteController.findAdotantes);
 
 
 //Rota para buscar um adotante por ID
-routerAdotantes.get('/:id', checkPermission(['administrador']), adotanteController.findAdotanteById);
+routerAdotantes.get('/:id', checkAuthentication, checkPermission(['administrador']), adotanteController.findAdotanteById);
 
 
 // Rota para adicionar um novo adotante
@@ -22,10 +22,10 @@ routerAdotantes.post('/', adotanteController.addAdotante);
 
 
 // Rota para atualizar um adotante por ID
-routerAdotantes.put('/:id', adotanteController.updateAdotante); 
+routerAdotantes.put('/:id', checkAuthentication, adotanteController.updateAdotante); 
 
 // Rota para deletar um adotante por ID
-routerAdotantes.delete('/:id', adotanteController.deleteAdotante);
+routerAdotantes.delete('/:id', checkAuthentication, adotanteController.deleteAdotante);
 
 // Rota para login do adotante
 routerLoginAdotantes.post('/', loginController.login);

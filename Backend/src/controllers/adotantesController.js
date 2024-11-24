@@ -1,14 +1,23 @@
 import { PrismaClient } from '@prisma/client';
-import pkg from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 const prismaClient = new PrismaClient();
-const { bcrypt } = pkg;
-
 
 export class AdotanteController {
-    async findAdotantes (request, response) {
+    async findAdotantes(request, response) {
         try {
-            const adotantes = await prismaClient.adotantes.findMany();
+            const adotantes = await prismaClient.adotantes.findMany({
+                select: {
+                    adotante_id: true,
+                    nome: true,
+                    email: true,
+                    telefone: true,
+                    cep: true,
+                    endereco: true,
+                    senha: false,
+                    user_adotante: true
+                }
+            });
             return response.status(200).json(adotantes);
         } catch (error) {
             return response.status(500).json({ error: error.message });
@@ -17,10 +26,20 @@ export class AdotanteController {
 
     async findAdotanteById(request, response) {
         const { id } = request.params;
-    
+
         try {
             const adotante = await prismaClient.adotantes.findFirst({
-                where: { adotante_id: id }
+                where: { adotante_id: id },
+                select: {
+                    adotante_id: true,
+                    nome: true,
+                    email: true,
+                    telefone: true,
+                    cep: true,
+                    endereco: true,
+                    senha: false,
+                    user_adotante: true
+                }
             });
             return response.status(200).json(adotante);
         } catch (error) {
@@ -38,30 +57,43 @@ export class AdotanteController {
                     nome, email, telefone, cep, endereco, senha: senhaHash, user_adotante
                 },
                 select: {
-                    id: true,
+                    adotante_id: true,
                     nome: true,
+                    email: true,
                     telefone: true,
                     cep: true,
                     endereco: true,
-                    user_adotante: true
+                    senha: false,
+                    user_adotante: false
                 }
             });
             return response.status(201).json(adotante);
-        } catch (error){
+        } catch (error) {
             return response.status(500).json({ error: error.message });
         }
     }
 
     async updateAdotante(request, response) {
         const { id } = request.params;
-        const { nome, email, telefone, cep, endereco, senha, user_adotante } = request.body;
-    
+        const { nome, email, telefone, cep, endereco, senha, user_adotante } = request.body; 
+
         try {
+
             const adotante = await prismaClient.adotantes.update({
                 data: {
                     nome, email, telefone, cep, endereco, senha, user_adotante
-                }, 
-                where: { adotante_id: id }
+                },
+                where: { adotante_id: id },
+                select: {
+                    adotante_id: true,
+                    nome: true,
+                    email: true,
+                    telefone: true,
+                    cep: true,
+                    endereco: true,
+                    senha: false,
+                    user_adotante: true
+                }
             });
             return response.status(200).json(adotante);
         } catch (error) {
@@ -71,7 +103,7 @@ export class AdotanteController {
 
     async deleteAdotante(request, response) {
         const { id } = request.params;
-    
+
         try {
             await prismaClient.adotantes.delete({
                 where: { adotante_id: id }
@@ -80,6 +112,6 @@ export class AdotanteController {
         } catch (error) {
             return response.status(500).json({ error: error.message });
         }
-    } 
+    }
 
 }

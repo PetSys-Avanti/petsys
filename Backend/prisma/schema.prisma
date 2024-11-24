@@ -8,21 +8,22 @@ datasource db {
 }
 
 model adocoes {
-  adocoes_id  String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id_pet      String?    @db.Uuid
-  id_adotante String?    @db.Uuid
-  adotantes   adotantes? @relation(fields: [id_adotante], references: [adotante_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_adotante")
-  pet         pet?       @relation(fields: [id_pet], references: [pet_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_pet")
+  adocoes_id      String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_pet          String?    @db.Uuid
+  id_adotante     String?    @db.Uuid
+  liberar_adocao  Boolean?
+  adotantes       adotantes? @relation(fields: [id_adotante], references: [adotante_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_adotante")
+  pet             pet?       @relation(fields: [id_pet], references: [pet_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_pet")
 }
 
 model adotantes {
   adotante_id   String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   nome          String       @db.VarChar(100)
   email         String       @unique @db.VarChar(100)
-  telefone      String       @db.VarChar(11)
-  cep           String       @db.VarChar(8)
-  endereco      String       @db.VarChar(100)
-  senha         String       @db.VarChar(20)
+  telefone      String?      @db.VarChar(11)
+  cep           String?      @db.VarChar(8)
+  endereco      String?      @db.VarChar(100)
+  senha         String       @db.VarChar(100)
   user_adotante user_sistema @default(usuario)
   adocoes       adocoes[]
 }

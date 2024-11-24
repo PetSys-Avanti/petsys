@@ -1,9 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import pkg from "bcryptjs";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const prismaClient = new PrismaClient();
-const { bcrypt } = pkg;
 
 export class LoginController {
 
@@ -15,11 +14,11 @@ export class LoginController {
                 where: { email }
             });
 
-            if(!usuario) {
-                return response.status(404).json({error: "Usuário não encontrado"});
+            if(!adotante) {
+                return response.status(404).json({error: "Adotante não encontrado"});
             }
 
-            const senhaValida = bcrypt.compareSync(senha, usuario.senha);
+            const senhaValida = bcrypt.compareSync(senha, adotante.senha);
 
             if(!senhaValida) {
                 return response.status(401).json({error: "Credenciais inválidas"});
