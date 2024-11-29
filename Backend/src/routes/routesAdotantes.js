@@ -14,7 +14,7 @@ routerAdotantes.get('/', checkAuthentication, checkPermission(['administrador'])
 
 
 //Rota para buscar um adotante por ID
-routerAdotantes.get('/:id', checkAuthentication, checkPermission(['administrador']), adotanteController.findAdotanteById);
+routerAdotantes.get('/:id', checkAuthentication, checkPermission(['administrador', 'usuario']), adotanteController.findAdotanteById);
 
 
 // Rota para adicionar um novo adotante

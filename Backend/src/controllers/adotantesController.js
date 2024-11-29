@@ -23,7 +23,7 @@ export class AdotanteController {
             return response.status(500).json({ error: error.message });
         }
     }
-
+ 
     async findAdotanteById(request, response) {
         const { id } = request.params;
 
@@ -76,8 +76,12 @@ export class AdotanteController {
     async updateAdotante(request, response) {
         const { id } = request.params;
         const { nome, email, telefone, cep, endereco, senha, user_adotante } = request.body; 
+        const adotanteId = request.adotante_id; 
 
         try {
+            if(adotanteId !== id) {
+                return response.status(403).json({error: "Você não tem permissão para atualizar este adotante!"});
+            }
 
             const adotante = await prismaClient.adotantes.update({
                 data: {

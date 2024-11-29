@@ -14,7 +14,9 @@ export function checkAuthentication(request, response, next) {
         if(!id) {
             return response.status(401).json("Não autorizado!");
         }
-        next();
+        request.adotante_id = id;
+        next();  
+        
     } catch {
         return response.status(500).json({error: "Token inválido!"});
     }
