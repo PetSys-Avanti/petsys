@@ -22,7 +22,7 @@ routerAdotantes.post('/', adotanteController.addAdotante);
 
 
 // Rota para atualizar um adotante por ID
-routerAdotantes.put('/:id', checkAuthentication, adotanteController.updateAdotante); 
+routerAdotantes.put('/:id', checkAuthentication, checkPermission(['administrador', 'usuario']), adotanteController.updateAdotante); 
 
 // Rota para deletar um adotante por ID
 routerAdotantes.delete('/:id', checkAuthentication, adotanteController.deleteAdotante);
